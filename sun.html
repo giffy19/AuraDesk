@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>AuraDesk</title>
+  <link rel="stylesheet" href="sun.css" />
+</head>
+<body>
+  <!-- Theme Toggle -->
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+    <span class="thumb" aria-hidden="true">🌙</span>
+  </button>
+
+  <main class="container">
+    <!-- Landing Page -->
+    <section id="landing" class="page active" aria-labelledby="landingTitle">
+      <div class="center-wrap">
+        <div class="card clock-weather fade-in">
+          <h1 id="landingTitle" class="visually-hidden">Dashboard</h1>
+          <div class="clock">
+            <div id="time">00:00:00</div>
+            <div id="date">Loading date…</div>
+          </div>
+
+          <!-- Weather Controls -->
+          <div class="weather">
+            <div class="controls">
+              <select id="stateSelect" aria-label="Select state/UT">
+                <option value="">Select State/UT</option>
+              </select>
+              <select id="citySelect" aria-label="Select city" disabled>
+                <option value="">Select City</option>
+              </select>
+              <button id="getWeather" class="btn-accent">Get Weather</button>
+            </div>
+
+            <div id="weatherInfo" class="weather-info">
+              <h3 id="cityName"></h3>
+              <div class="wx-row">
+                <div class="wx-text">
+                  <p id="temp"></p>
+                  <p id="desc"></p>
+                  <p id="humidity"></p>
+                  <p id="wind"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shortcuts -->
+        <div class="shortcut-icons">
+          <button class="icon-card" id="todoIcon" aria-label="Open To-Do List">
+            📝
+            <p>To-Do List</p>
+          </button>
+          <button class="icon-card" id="diaryIcon" aria-label="Open Personal Diary">
+            📔
+            <p>Personal Diary</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- To-Do Page -->
+    <section id="todoPage" class="page" aria-labelledby="todoTitle">
+      <button class="back-btn" aria-label="Back to landing">⬅</button>
+      <div class="card todo fade-in">
+        <h2 id="todoTitle">📝 To-Do List</h2>
+        <div class="todo-input">
+          <input type="text" id="taskInput" placeholder="Add a new task…" />
+          <button id="addTask" class="btn-accent" aria-label="Add task">+</button>
+        </div>
+        <ul id="taskList" aria-live="polite"></ul>
+      </div>
+    </section>
+
+    <!-- Diary Page -->
+    <section id="diaryPage" class="page" aria-labelledby="diaryTitle">
+      <button class="back-btn" aria-label="Back to landing">⬅</button>
+      <div class="card diary fade-in">
+        <h2 id="diaryTitle">📔 Personal Diary</h2>
+
+        <label class="sr-label" for="diaryText">Diary text</label>
+        <textarea id="diaryText" placeholder="Write your thoughts…"></textarea>
+
+        <h3>🎨 Doodle</h3>
+        <canvas id="doodleCanvas" width="560" height="260" aria-label="Doodle canvas"></canvas>
+        <div class="doodle-tools">
+          <label>Pen
+            <input type="color" id="penColor" value="#1f2937" />
+          </label>
+          <label>Size
+            <input type="range" id="penSize" min="1" max="14" value="3" />
+          </label>
+          <button id="clearDoodle" class="btn-outline">Clear</button>
+          <button id="saveDoodle" class="btn-accent">Save as Image</button>
+        </div>
+
+        <h3>📸 Images</h3>
+        <div class="image-tools">
+          <input type="file" id="uploadImage" accept="image/*" />
+          <button id="captureImage" class="btn-accent">Capture</button>
+        </div>
+        <div id="imagePreview" class="image-preview" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="sun.js"></script>
+</body>
+</html>

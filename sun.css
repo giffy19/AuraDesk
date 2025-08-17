@@ -1,0 +1,322 @@
+/* ---------- Base / Theme ---------- */
+:root{
+  --bg: #0b1020;
+  --fg: #e5e7eb;
+  --muted: #93a3b6;
+  --card: #151b2e;
+  --accent: #4f46e5;
+  --accent-2: #22c55e;
+  --danger: #ef4444;
+  --shadow: 0 10px 24px rgba(0,0,0,.35);
+  --radius: 16px;
+}
+
+.dark{
+  --bg: #0b1020;
+  --fg: #e5e7eb;
+  --card: #151b2e;
+}
+.light{
+  --bg: #f6f7fb;
+  --fg: #0f172a;
+  --muted: #475569;
+  --card: #ffffff;
+  --shadow: 0 10px 24px rgba(0,0,0,.1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font:16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow-x:hidden;
+  transition: background .3s, color .3s;
+}
+
+/* ---------- Utilities ---------- */
+.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);}
+.sr-label{display:block; margin:.5rem 0 .25rem; color:var(--muted); font-size:.9rem}
+
+/* ---------- Theme Toggle ---------- */
+.theme-toggle{
+  position:fixed; top:16px; right:16px;
+  width:56px; height:32px; border-radius:20px;
+  background:#2b3250; border:none; padding:4px;
+  display:flex; align-items:center;
+  cursor:pointer; box-shadow:var(--shadow);
+  transition:background .3s, transform .2s;
+  z-index:10;
+}
+.theme-toggle:hover{ transform:scale(1.06); }
+.theme-toggle .thumb{
+  width:24px; height:24px; border-radius:50%;
+  background:#ffd166; display:flex; align-items:center; justify-content:center;
+  transition: transform .35s ease, background .3s;
+}
+.light .theme-toggle{ background:#cbd5e1; }
+.light .theme-toggle .thumb{ transform: translateX(24px); background:#f8fafc; }
+
+/* ---------- Layout ---------- */
+.container{
+  position:relative;
+  max-width: 920px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 72px 16px 24px; /* top space for toggle */
+}
+
+/* Pages are stacked & animated */
+.page{
+  position:absolute; inset:72px 0 0 0;
+  min-height: calc(100vh - 72px);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; transform: translateX(100%);
+  transition: opacity .5s, transform .5s;
+}
+.page.active{ opacity:1; transform: translateX(0); z-index:2; }
+.page.slide-left{ transform: translateX(-100%); }
+.page.slide-right{ transform: translateX(100%); }
+
+/* Landing content centered */
+.center-wrap{ width:100%; display:flex; flex-direction:column; align-items:center; gap:24px; }
+
+/* ---------- Cards / Sections ---------- */
+.card{
+  width:min(720px, 100%);
+  background:var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.clock{
+  text-align:center;
+  margin-bottom: 16px;
+}
+#time{ font-size: clamp(32px, 8vw, 64px); font-weight:700; letter-spacing:.5px; }
+#date{ color:var(--muted); margin-top:4px; }
+
+/* Weather */
+.weather .controls{
+  display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:8px;
+}
+.weather .controls select, .weather .controls button{
+  padding:10px 12px; border-radius:12px; border:1px solid #334155; background:#0f172a; color:#e5e7eb;
+  transition: transform .2s, border-color .3s, background .3s;
+}
+.light .weather .controls select, .light .weather .controls button{
+  background:#f8fafc; border-color:#e2e8f0; color:#0f172a;
+}
+.weather .controls select:focus{ outline:none; border-color:var(--accent); transform:scale(1.02); }
+.btn-accent{ background:var(--accent); border:none; cursor:pointer; }
+.btn-accent:hover{ transform: translateY(-1px); }
+.btn-outline{ background:transparent; border:1px solid #475569; color:var(--fg); }
+.btn-outline:hover{ transform: translateY(-1px); }
+
+.weather-info{ margin-top: 10px; }
+.wx-row{ display:flex; gap:12px; align-items:center; }
+#weatherIcon{ width:64px; height:64px; image-rendering: -webkit-optimize-contrast; }
+
+/* Shortcut icons row */
+.shortcut-icons{
+  display:flex; gap:22px; justify-content:center; flex-wrap:wrap;
+}
+.icon-card{
+  width:140px; height:120px; border-radius:18px;
+  background: linear-gradient(135deg, rgba(79,70,229,.2), rgba(34,197,94,.2));
+  border:1px solid rgba(148,163,184,.2);
+  color:var(--fg); display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; font-size:28px; cursor:pointer;
+  transition: transform .25s ease, box-shadow .3s, background .3s;
+}
+.icon-card p{ margin:0; font-size:14px; color:var(--fg); }
+.icon-card:hover{ transform: translateY(-4px) scale(1.03); box-shadow: var(--shadow); }
+
+/* Back button */
+.back-btn{
+  position:absolute; top:12px; left:12px;
+  width:44px; height:44px; border-radius:50%;
+  border:none; background: var(--danger); color:#fff; font-size:18px;
+  cursor:pointer; box-shadow: var(--shadow); transition: transform .2s, background .3s;
+  z-index:3;
+}
+.back-btn:hover{ transform: scale(1.06); background:#dc2626; }
+
+/* To-Do */
+.todo-input{ display:flex; gap:10px; margin-top:8px; }
+.todo-input input{
+  flex:1; padding:10px 12px; border-radius:12px; border:1px solid #334155; background:#0f172a; color:#e5e7eb;
+  transition: transform .2s, border-color .3s;
+}
+.light .todo-input input{ background:#f8fafc; border-color:#e2e8f0; color:#0f172a; }
+.todo-input input:focus{ outline:none; border-color: var(--accent); transform: scale(1.02); }
+#addTask{ min-width:54px; }
+
+#taskList{ list-style:none; padding:0; margin:14px 0 0; display:grid; gap:8px; }
+#taskList li{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; background: rgba(148,163,184,.08); border:1px solid rgba(148,163,184,.18);
+  padding:10px 12px; border-radius:12px;
+  opacity:0; transform: translateY(-8px); animation: taskSlide .3s forwards;
+}
+#taskList li .text{ flex:1; }
+#taskList li.completed .text{ text-decoration: line-through; opacity:.65; }
+#taskList li .actions{ display:flex; gap:8px; }
+.icon-btn{
+  border:none; background:transparent; font-size:18px; cursor:pointer; color:var(--fg);
+  transition: transform .2s;
+}
+.icon-btn:hover{ transform: scale(1.2) }
+
+/* Diary */
+textarea{
+  width:100%; min-height:40px; padding:12px; border-radius:12px;
+  border:1px solid #334155; background:#0f172a; color:#e5e7eb; resize:vertical;
+  transition: transform .2s, border-color .3s;
+}
+.light textarea{ background:#f8fafc; border-color:#e2e8f0; color:#0f172a; }
+textarea:focus{ outline:none; border-color: var(--accent); transform: scale(1.01); }
+
+#doodleCanvas{
+  width:100%; max-width:100%; height:auto; aspect-ratio: 560/260;
+  border-radius:12px; border:2px solid rgba(148,163,184,.3);
+  background: repeating-linear-gradient(0deg, rgba(148,163,184,.07) 0 2px, transparent 2px 10px);
+  margin-top:10px; cursor: crosshair; transition: box-shadow .3s;
+}
+#doodleCanvas:hover{ box-shadow: var(--shadow); }
+.doodle-tools, .image-tools{
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px;
+}
+.image-preview{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+.image-preview img{
+  max-width:120px; border-radius:12px; transform: translateY(12px) scale(.9); opacity:0;
+  animation: slideUp .45s forwards; box-shadow: var(--shadow);
+}
+
+/* Animations */
+.fade-in{ animation: fadeIn .6s ease both; }
+@keyframes fadeIn{ from{opacity:0; transform: translateY(8px);} to{opacity:1; transform:none;} }
+@keyframes taskSlide{ to{ opacity:1; transform: translateY(0);} }
+@keyframes slideUp{ to{ transform: translateY(0) scale(1); opacity:1; } }
+
+/* Responsive tweaks */
+@media (max-width: 520px){
+  .icon-card{ width:130px; height:110px; }
+  #time{ font-size: clamp(28px, 10vw, 48px); }
+}
+
+
+/* ---------- Mobile view tweaks ---------- */
+@media (max-width: 520px) {
+  /* Clock & Weather */
+  #time {
+    font-size: clamp(26px, 9vw, 42px);
+  }
+
+  .shortcut-icons {
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .icon-card {
+    width: 45%;
+    height: 100px;
+    font-size: 24px;
+    gap: 4px;
+  }
+  .icon-card p {
+    font-size: 12px;
+  }
+
+  .weather .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .weather .controls select,
+  .weather .controls button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  /* To-Do */
+  .todo-input {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .todo-input input,
+  #addTask {
+    width: 100%;
+    font-size: 1rem;
+  }
+  #taskList li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #taskList li .actions {
+    align-self: flex-end;
+  }
+
+  /* Diary - fully responsive */
+  textarea {
+    font-size: 1rem;
+    width: 100%;
+  }
+  .doodle-tools,
+  .image-tools {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  #doodleCanvas {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+  }
+  .image-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  /* Back button */
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+
+/* Default desktop/tablet layout */
+#diaryPage {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.doodle-container,
+.image-container {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Mobile view */
+@media (max-width: 600px) {
+  #diaryPage {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .doodle-container,
+  .image-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
